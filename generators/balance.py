@@ -18,7 +18,7 @@ def gerar_dados(num_linhas):
 
     return dados
 
-def salvar_csv(dados, nome_arquivo="dados_corrente.csv"):
+def salvar_csv(dados, nome_arquivo="../data/dados_corrente.csv"):
     cabecalhos = ["fase1", "fase2", "fase3", "label"]
 
     with open(nome_arquivo, mode="a", newline="") as arquivo:
