@@ -5,16 +5,24 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import classification_report, accuracy_score
 from sklearn.utils import resample
 
+import pickle
+from fogml.generators import GeneratorFactory
+
 # Carrega os dados do CSV
 dados = pd.read_csv("./data/dados_corrente.csv")
+
+print(len(dados))
+
+print(dados.columns)
+print(dados.head())
 
 # Divide os dados em features (X) e labels (y)
 X = dados[["fase1", "fase2", "fase3"]]
 y = dados["label"]
 
 # Balanceamento dos dados para ter quantidades iguais de True e False
-dados_true = dados[dados["label"] == True]
-dados_false = dados[dados["label"] == False]
+dados_true = dados[dados["label"] == "True"]
+dados_false = dados[dados["label"] == "False"]
 
 print("Número de exemplos True:", len(dados_true))
 print("Número de exemplos False:", len(dados_false))
@@ -44,7 +52,14 @@ X_train, X_temp, y_train, y_temp = train_test_split(X_balanced, y_balanced, test
 X_val, X_test, y_val, y_test = train_test_split(X_temp, y_temp, test_size=0.5, random_state=1)
 
 # Cria e treina o modelo de rede neural
-modelo = MLPClassifier(hidden_layer_sizes=(10, 5), max_iter=1000, random_state=1)
+modelo = MLPClassifier(hidden_layer_sizes=(10,), max_iter=1000, random_state=1)
+
+
+# FogML
+factory = GeneratorFactory()
+generator = factory.get_generator(modelo)
+
+
 modelo.fit(X_train, y_train)
 
 # Avalia o modelo no conjunto de teste
@@ -62,3 +77,9 @@ print("============================================")
 print(classification_report(y_val, y_val_pred))
 print("Acurácia: %.2f" %(accuracy_score(y_val, y_val_pred)))
 
+
+
+dumped = pickle.dumps(modelo)
+print("SIZE: " + str(len(dumped)))
+
+generator.generate()
