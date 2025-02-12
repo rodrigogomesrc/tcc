@@ -59,7 +59,7 @@ def salvar_csv(dados, nome_arquivo="../data/dados_fator_potencia.csv"):
                  [f"fator_potencia_{i+1}" for i in range(8)] + \
                  ["corrente_central", "fator_potencia_central", "classe"]
 
-    with open(nome_arquivo, mode="a", newline="") as arquivo:
+    with open(nome_arquivo, mode="w", newline="") as arquivo:
         escritor_csv = csv.writer(arquivo)
         escritor_csv.writerow(cabecalhos)  # Escreve os cabeçalhos
         # Salvar os dados
