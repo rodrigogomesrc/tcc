@@ -4,6 +4,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import classification_report, accuracy_score
 from sklearn.utils import resample
+from fogml.generators import GeneratorFactory
 
 # Carrega os dados do CSV
 dados = pd.read_csv("./data/dados_fator_potencia.csv")
@@ -63,3 +64,8 @@ print("\nVALIDAÇÃO:")
 print("============================================")
 print(classification_report(y_val, y_val_pred))
 print("Acurácia: %.2f" % accuracy_score(y_val, y_val_pred))
+
+#Gerador do modelo MLP
+factory = GeneratorFactory()
+generator = factory.get_generator(modelo)
+generator.generate()

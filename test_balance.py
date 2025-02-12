@@ -21,8 +21,8 @@ X = dados[["fase1", "fase2", "fase3"]]
 y = dados["label"]
 
 # Balanceamento dos dados para ter quantidades iguais de True e False
-dados_true = dados[dados["label"] == "True"]
-dados_false = dados[dados["label"] == "False"]
+dados_true = dados[dados["label"] == "HIGH"]
+dados_false = dados[dados["label"] == "LOW"]
 
 print("Número de exemplos True:", len(dados_true))
 print("Número de exemplos False:", len(dados_false))
